@@ -58,6 +58,6 @@ def main():
     st.write(summary)
 
 
-if __name__ =="__main__":
-    main()
+# if __name__ =="__main__":
+#     main()
 
