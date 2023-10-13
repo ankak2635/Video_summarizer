@@ -120,3 +120,4 @@ wrapt==1.15.0
 yarl==1.9.2
 yt-dlp==2023.10.7
 zipp==3.17.0
+ffmpeg-python
