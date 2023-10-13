@@ -16,43 +16,71 @@ class utils():
         
 
     # download only audio from YouTube and transcribe
-    def download_audio(self, url):
+    def download_media(self, url):
         """
-            This function takes a video URL, downloads only audio of the video, and transcribes it content to text.
+            This function takes a audio/video URL (downloads only audio from the media) and downloads it. 
             
             Args:
-                url (str): The URL of the video to be downloaded and transcribed.
+                url (str): The URL of the media to be downloaded and transcribed.
 
             Raises:
-                Exception: If any errors occur during the video download or transcription process, an error message is printed.
+                Exception: If any errors occur during the audio download or transcribing process, an error message is printed.
                 
         """
+        
         try:
             # Set the options for audio download
-            filename = 'audio_1.mp3'
+            filename = 'audio.mp3'
             ydl_opts = {
                 'format': 'bestaudio/best',
                 'outtmpl': filename,
                 'quiet': True,
             }
-            
+
             # Download the audio using yt_dlp
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                result = ydl.extract_info(url, download=True)
+                audio_file = ydl.download([url])
 
-            # Transcribe the audio content
-            model = whisper.load_model('base')
+            return audio_file
+
+            
+        except yt_dlp.utils.DownloadError as de:
+            print(f"An error occurred during video download: {de}")
+        
+
+    # transcribe the video
+    def transcribe(self):
+        """
+        Transcribe audio content using the Whisper library.
+
+        This function takes an audio file as input and transcribes its content using the Whisper library, specifically the 'tiny' model.
+
+        Args:
+            audio_file (str): The audio file to be transcribed.
+
+        Returns:
+            dict: A dictionary containing the transcription results, including the transcribed text and additional information.
+
+        Raises:
+            Exception: If any unexpected errors occur, an error message is printed.
+
+        """
+
+        try:
+            # Transcribe the audio content using the 'tiny' Whisper model
+            model = whisper.load_model('tiny')
             transcription = model.transcribe('audio.mp3')
 
-            # Save the transcript as a text file
-            with open('text.txt', 'w') as file:
+            # save as text file
+            with open ('text.txt', 'w') as file:  
                 file.write(transcription['text'])
 
         except Exception as e:
-            print(f"An error occurred during video download or transcription: {e}")
+            print(f"An error occurred during audio transcription: {e}")
 
-    
-    def _split_transcript(self):
+
+
+    def split_transcript(self):
         """
         Split and segment a text document into smaller chunks for further processing.
 
@@ -70,14 +98,14 @@ class utils():
             text_splitter = RecursiveCharacterTextSplitter(
                 chunk_size=1000, chunk_overlap =50, separators=[' ', ',', '\n']
                 )
+            
+            with open('text.txt') as f:
+                text = f.read()
 
-            # read the text document
-            with open('text.txt') as file:
-                text = file.read()
-
-            # split the text
+             # split the text
             splitted_text = text_splitter.split_text(text)
-            docs = [Document(page_content=t) for t in splitted_text[:4]]
+            docs = [Document(page_content=t) for t in splitted_text]
+            
             return docs
 
         except Exception as e:
@@ -85,7 +113,7 @@ class utils():
 
 
     # summarize the transcript
-    def summarize_text(self):
+    def summarize_text(self,docs):
         """
         Split and segment a text document into smaller chunks for further processing.
 
@@ -100,8 +128,6 @@ class utils():
         """
         
         try:
-            # get the doc from split_transcript function
-            docs= self._split_transcript()
 
             # load the openai model
             llm=OpenAI(model='text-davinci-003', temperature=0)
@@ -139,8 +165,9 @@ class utils():
 
 
 # if __name__ == '__main__':
-#     url = 'https://www.youtube.com/watch?v=mBjPyte2ZZo'
+#     # url = 'https://www.youtube.com/watch?v=mBjPyte2ZZo'
 #     obj = utils()
-#     obj.download_audio(url=url)
+#     res = obj.summarize_text()
+#     print(res)
   
     
