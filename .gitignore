@@ -130,7 +130,7 @@ venv.bak/
 myenv/
 
 # files
-.mp3
+audio_1.mp3
 
 # Spyder project settings
 .spyderproject
