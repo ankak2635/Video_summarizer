@@ -138,13 +138,9 @@ class utils():
 
 
 
-
-
-
-
-if __name__ == '__main__':
-    url = 'https://www.youtube.com/watch?v=mBjPyte2ZZo'
-    obj = utils()
-    obj.download_audio(url=url)
+# if __name__ == '__main__':
+#     url = 'https://www.youtube.com/watch?v=mBjPyte2ZZo'
+#     obj = utils()
+#     obj.download_audio(url=url)
   
     
