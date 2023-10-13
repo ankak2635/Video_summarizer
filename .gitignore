@@ -129,6 +129,9 @@ env.bak/
 venv.bak/
 myenv/
 
+# files
+.mp3
+
 # Spyder project settings
 .spyderproject
 .spyproject
