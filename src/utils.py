@@ -69,7 +69,7 @@ class utils():
         try:
             # Transcribe the audio content using the 'tiny' Whisper model
             model = whisper.load_model('tiny')
-            transcription = model.transcribe('audio.mp3')
+            transcription = model.transcribe('./audio.mp3')
 
             # save as text file
             with open ('text.txt', 'w') as file:  
