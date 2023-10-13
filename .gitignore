@@ -128,11 +128,9 @@ ENV/
 env.bak/
 venv.bak/
 myenv/
-audio_1.mp3/
+audio.mp3/
+text.txt/
 .vscode
-
-# files
-audio_1.mp3
 
 # Spyder project settings
 .spyderproject
