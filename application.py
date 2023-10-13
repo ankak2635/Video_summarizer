@@ -1,63 +1,45 @@
 import streamlit as st
 from src.utils import utils
 
-def main():
-    """
-    Main function for the Video Summarizer web application.
+# initaite the utils class
+utility = utils()
 
-    This function sets up a Streamlit web application for summarizing audio/video content.
-    Users can paste a URL of a YouTube video or podcast, and the application will download the media,
-    transcribe it, preprocess the transcription, and generate a summary.
+# set webpage config
+st.set_page_config(page_title="Video Summarizer")
 
-    Returns:
-        None
+# A header and details
+st.header("Video Summarizer")
+st.write("Paste a audio/video URL on the sidebar and get the summary of the content below.")
 
-    Example:
-    To run the application, simply execute this script. It will launch a web interface where users can input a URL
-    and get a summary of the content.
-    """
-    # initaite the utils class
-    utility = utils()
+summary = ''
 
-    # set webpage config
-    st.set_page_config(page_title="Video Summarizer")
+# Sidebar for processing the url
+with st.sidebar:
+    st.subheader("Paste a URL of the content")
+    st.text("A YouTube video or a podcast")
+    url = st.text_input('URL link')
 
-    # A header and details
-    st.header("Video Summarizer")
-    st.write("Paste a audio/video URL on the sidebar and get the summary of the content below.")
+    # create a download button
+    if st.button("Process"):
+        with st.status("Processing..."):
 
-    summary = ''
+            # download the audio from the url
+            st.write("Downloading media...")
+            utility.download_media(url=url)
 
-    # Sidebar for processing the url
-    with st.sidebar:
-        st.subheader("Paste a URL of the content")
-        st.text("A YouTube video or a podcast")
-        url = st.text_input('URL link')
+            # transcribe the audio
+            st.write("Transcribing...")
+            utility.transcribe()
 
-        # create a download button
-        if st.button("Process"):
-            with st.status("Processing..."):
+            # create chunks
+            st.write("Preprocessing the transcription...")
+            docs = utility.split_transcript()
 
-                # download the audio from the url
-                st.write("Downloading media...")
-                audio_file = utility.download_media(url=url)
+            # summarize the doc
+            st.write("Generating summary...")
+            summary = utility.summarize_text(docs)
 
-                # transcribe the audio
-                st.write("Transcribing...")
-                utility.transcribe()
+# Display the summary in the main page
+st.write(summary)
 
-                # create chunks
-                st.write("Preprocessing the transcription...")
-                docs = utility.split_transcript()
-
-                # summarize the doc
-                st.write("Generating summary...")
-                summary = utility.summarize_text(docs)
-    
-    # Display the summary in the main page
-    st.write(summary)
-
-
-# if __name__ =="__main__":
-#     main()
 
