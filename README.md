@@ -1,4 +1,4 @@
-# Video Summarize
+# Video Summarizer
 
 **Video Summarize** is a Streamlit web application developed in Python that allows you to efficiently summarize the content of video and audio media. It simplifies the process of summarizing video or audio content by taking a URL as input and providing a concise summary in minutes.
 
