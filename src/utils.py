@@ -2,6 +2,7 @@ import yt_dlp
 import whisper 
 import textwrap
 import torch
+import os
 from dotenv import load_dotenv
 
 from langchain_openai import ChatOpenAI
@@ -31,6 +32,16 @@ class utils():
         """
         
         try:
+
+            # delete any pre-existing audio and transcript
+            audio_file = 'audio.mp3'
+            transcript_file = 'text.txt'
+
+            if os.path.exists(audio_file):
+                os.remove(audio_file)
+            if os.path.exists(transcript_file):
+                os.remove(transcript_file)
+                
             # Set the options for audio download
             filename = 'audio.mp3'
             ydl_opts = {
@@ -47,7 +58,7 @@ class utils():
 
             
         except yt_dlp.utils.DownloadError as de:
-            print(f"An error occurred during video download: {de}")
+            raise Exception(f"An error occurred during video download: {de}")
         
 
     # transcribe the video
@@ -81,7 +92,7 @@ class utils():
                 file.write(transcription['text'])
 
         except Exception as e:
-            print(f"An error occurred during audio transcription: {e}")
+            raise Exception(f"An error occurred during audio transcription: {e}")
 
 
 
@@ -114,7 +125,7 @@ class utils():
             return docs
 
         except Exception as e:
-            print(f"An error occurred during text splitting: {e}")
+            raise Exception(f"An error occurred during text splitting: {e}")
 
 
 
@@ -169,7 +180,7 @@ class utils():
             return wrapped_text
 
         except Exception as e:
-            print(f"An error occurred during summarization: {e}")
+            raise Exception(f"An error occurred during summarization: {e}")
 
 
 # if __name__ == '__main__':
