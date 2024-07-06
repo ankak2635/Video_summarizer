@@ -30,7 +30,7 @@ The workflow of the Video Summarize application is structured as follows:
 
 5. **LangChain's prompt_template**: It allows you to create custom prompts that guide the language model in summarization.
 
-6. **OpenAI's text-davinci-003 LLM**: This powerful language model processes the chunked texts, transforming them into concise and informative summaries.
+6. **GPT 3.5-turbo**: This powerful language model processes the chunked texts, transforming them into concise and informative summaries.
 
 7. **LangChain's load_summarize_chain**: This function chains the custom prompt and LLM together, creating a coherent pipeline for summarization.
 
