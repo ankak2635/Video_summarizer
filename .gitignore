@@ -52,6 +52,8 @@ coverage.xml
 cover/
 audio.mp3
 text.txt
+.vscode
+.devcontainer
 
 # Translations
 *.mo
