@@ -14,7 +14,7 @@ The application leverages several key libraries to perform its tasks effectively
 
 3. **LangChain**: Provides essential components for text manipulation and summarization.
 
-4. **OpenAI's text-davinci-003 LLM (Language Model)**: Used to process the chunked texts and generate summaries.
+4. **GPT 3.5-turbo**: Used to process the chunked texts and generate summaries.
 
 ## Workflow
 
